@@ -54,7 +54,7 @@ rule peanut_butter_and_jelly_sandwich_recipe:
      output: jack.pbandj
 2 of 2 steps (100%) done
 ```
-But you cannot type variables as targets in Snakemake, unlike Make.
+But you cannot type variables as targets in Snakemake.
 ```
 (raboso-env)[leipzigj@raboso snakemaketutorial]$ snakemake SANDWICHES
 MissingRuleException:
@@ -87,6 +87,5 @@ So now any existing file in the filesystem is eligible for a sandwich! Exactly w
 In Snakemake, just as in Make:
 *  Write re-usable wildcard rules based on transforming one type of file to another
 *  Set variables to specify actual file targets
-
-In Snakemake (but not Make) you must:
 *  Write a pseudo-rule that uses the variable as input.
+*  
