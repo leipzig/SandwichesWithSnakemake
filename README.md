@@ -86,4 +86,5 @@ In Snakemake, just as in Make:
 *  Write re-usable wildcard rules based on transforming one type of file to another
 *  Set variables to specify actual file targets
 
-In Snakemake (but not Make) you have to write a pseudo-rule that uses the variable as input.
+In Snakemake (but not Make) you must:
+*  Write a pseudo-rule that uses the variable as input.
