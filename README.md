@@ -18,7 +18,7 @@ rule peanut_butter_and_jelly_sandwich_recipe:
 `all` is a pseudo-rule - it only exists to establish the variable `SANDWICHES` as a target.
 
 ```
-(raboso-env)[leipzigj@raboso snakemaketutorial]$snakemake all```
+(raboso-env)[leipzigj@raboso snakemaketutorial]$snakemake all
 Provided cores: 1
 Job counts:
     count	jobs
