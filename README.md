@@ -79,7 +79,7 @@ rule peanut_butter_and_jelly_sandwich_recipe:
 ```
 
 
-So now any existing file is eligible for a sandwich? Exactly whose sandwich is it supposed to make if I run `peanut_butter_and_jelly_sandwich_recipe`?
+So now any existing file is eligible for a sandwich! Exactly whose sandwich is it supposed to make if I run `peanut_butter_and_jelly_sandwich_recipe`?
 
 
 In Snakemake, just as in Make:
