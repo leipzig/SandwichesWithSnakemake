@@ -1,5 +1,6 @@
+This is my snakefile:
 ```
-cat Snakefile 
+(raboso-env)[leipzigj@raboso snakemaketutorial]cat Snakefile 
 SANDWICHES = ['jack.pbandj','jill.pbandj']
 
 rule all:
@@ -62,7 +63,7 @@ No rule to produce SANDWICHES.
 ```
 You can only type in files and rules as targets.
 
-`peanut_butter_and_jelly_sandwich_recipe` is an implicit rule - it uses wildcards to define its imputs and outputs. Can we run it?
+`peanut_butter_and_jelly_sandwich_recipe` is an implicit rule - it uses wildcards to define its inputs and outputs. Can we run it?
 ```
 (raboso-env)[leipzigj@raboso snakemaketutorial]$ snakemake peanut_butter_and_jelly_sandwich_recipe
 RuleException in line 6 of Snakefile:
