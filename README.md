@@ -77,7 +77,10 @@ rule peanut_butter_and_jelly_sandwich_recipe:
      output: "{name}.pbandj"
      shell: "cat {input.pb} {input.jelly} > {output}"
 ```
-So now any existing file is eligible for a sandwich? Whose sandwich is it supposed to make if I run `peanut_butter_and_jelly_sandwich_recipe`?
+
+
+So now any existing file is eligible for a sandwich? Exactly whose sandwich is it supposed to make if I run `peanut_butter_and_jelly_sandwich_recipe`?
+
 
 In Snakemake, just as in Make:
 *  Write re-usable wildcard rules based on transforming one type of file to another
