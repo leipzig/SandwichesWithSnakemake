@@ -70,7 +70,9 @@ RuleException in line 6 of Snakefile:
 Could not resolve wildcards in rule peanut_butter_and_jelly_sandwich_recipe:
 name
 ```
-Why didn't this work? Because Snakemake as no idea what you are trying to make. A wildcard rule is a recipe, not a target. You might say, "hey why didn't it look in the kids folder and then make a sandwich for each of them?" However, the kids directory was just for neatness. Our rule could just as easily been:
+Why didn't this work? Because Snakemake has no idea what you are trying to make.
+
+A wildcard rule is a recipe, not a target. You might say, "hey why didn't it just look in the `kids` folder and then make a sandwich for each of them?" However, the `kids` directory was named just for neatness. Our rule could just as easily been:
 ```
 rule peanut_butter_and_jelly_sandwich_recipe:
      input: "{name}", jelly="ingredients/jelly", pb="ingredients/peanut_butter"
@@ -79,7 +81,7 @@ rule peanut_butter_and_jelly_sandwich_recipe:
 ```
 
 
-So now any existing file is eligible for a sandwich! Exactly whose sandwich is it supposed to make if I run `peanut_butter_and_jelly_sandwich_recipe`?
+So now any existing file in the filesystem is eligible for a sandwich! Exactly whose sandwich is it supposed to make if I run `peanut_butter_and_jelly_sandwich_recipe`?
 
 
 In Snakemake, just as in Make:
