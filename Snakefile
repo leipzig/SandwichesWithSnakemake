@@ -4,7 +4,7 @@ rule all:
      input: SANDWICHES
 
 rule clean:
-     shell: "rm *.pbandj"
+     shell: "rm -f *.pbandj"
 
 rule peanut_butter_and_jelly_sandwich_recipe:
      input: "kids/{name}", jelly="ingredients/jelly", pb="ingredients/peanut_butter"
