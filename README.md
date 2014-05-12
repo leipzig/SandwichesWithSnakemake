@@ -88,4 +88,3 @@ In Snakemake, just as in Make:
 *  Write re-usable wildcard rules based on transforming one type of file to another
 *  Set variables to specify actual file targets
 *  Write a pseudo-rule that uses the variable as input.
-*  
