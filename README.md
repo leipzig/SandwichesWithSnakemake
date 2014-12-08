@@ -1,5 +1,6 @@
+This is my snakefile:
 ```
-cat Snakefile 
+(raboso-env)[leipzigj@raboso snakemaketutorial]cat Snakefile 
 SANDWICHES = ['jack.pbandj','jill.pbandj']
 
 rule all:
@@ -17,7 +18,7 @@ rule peanut_butter_and_jelly_sandwich_recipe:
 `all` is a pseudo-rule - it only exists to establish the variable `SANDWICHES` as a target.
 
 ```
-(raboso-env)[leipzigj@raboso snakemaketutorial]$snakemake all```
+(raboso-env)[leipzigj@raboso snakemaketutorial]$snakemake all
 Provided cores: 1
 Job counts:
     count	jobs
@@ -53,7 +54,7 @@ rule peanut_butter_and_jelly_sandwich_recipe:
      output: jack.pbandj
 2 of 2 steps (100%) done
 ```
-But you cannot type variables as targets in Snakemake, unlike Make.
+But you cannot type variables as targets in Snakemake.
 ```
 (raboso-env)[leipzigj@raboso snakemaketutorial]$ snakemake SANDWICHES
 MissingRuleException:
@@ -62,29 +63,34 @@ No rule to produce SANDWICHES.
 ```
 You can only type in files and rules as targets.
 
-`peanut_butter_and_jelly_sandwich_recipe` is an implicit rule - it uses wildcards to define its imputs and outputs. Can we run it?
+`peanut_butter_and_jelly_sandwich_recipe` is an implicit rule - it uses wildcards to define its inputs and outputs. Can we run it?
 ```
 (raboso-env)[leipzigj@raboso snakemaketutorial]$ snakemake peanut_butter_and_jelly_sandwich_recipe
 RuleException in line 6 of Snakefile:
 Could not resolve wildcards in rule peanut_butter_and_jelly_sandwich_recipe:
 name
 ```
-Why didn't this work? Because Snakemake as no idea what you are trying to make. A wildcard rule is a recipe, not a target. You might say, "hey why didn't it look in the kids folder and then make a sandwich for each of them?" However, the kids directory was just for neatness. Our rule could just as easily been:
+Why didn't this work? Because Snakemake has no idea what you are trying to make.
+
+A wildcard rule is a recipe, not a target. You might say, "hey why didn't it just look in the `kids` folder and then make a sandwich for each of them?" However, the `kids` directory was named just for neatness. Our rule could just as easily been:
 ```
 rule peanut_butter_and_jelly_sandwich_recipe:
      input: "{name}", jelly="ingredients/jelly", pb="ingredients/peanut_butter"
      output: "{name}.pbandj"
      shell: "cat {input.pb} {input.jelly} > {output}"
 ```
-So now any existing file is eligible for a sandwich? Whose sandwich is it supposed to make if I run `peanut_butter_and_jelly_sandwich_recipe`?
+
+
+So now any existing file in the filesystem is eligible for a sandwich! Exactly whose sandwich is it supposed to make if I run `peanut_butter_and_jelly_sandwich_recipe`?
+
 
 In Snakemake, just as in Make:
 *  Write re-usable wildcard rules based on transforming one type of file to another
 *  Set variables to specify actual file targets
+*  Write a pseudo-rule that uses the variable as input.
 
 In Snakemake (but not Make) you have to write a pseudo-rule that uses the variable as input.
 
 How can we derive targets from existing source files?
 
 Snakemake is Python, so we can simply use Python's `glob` function to read a directory contents and then transform the names to targets
-
