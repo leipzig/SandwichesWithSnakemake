@@ -83,3 +83,8 @@ In Snakemake, just as in Make:
 *  Set variables to specify actual file targets
 
 In Snakemake (but not Make) you have to write a pseudo-rule that uses the variable as input.
+
+How can we derive targets from existing source files?
+
+Snakemake is Python, so we can simply use Python's `glob` function to read a directory contents and then transform the names to targets
+

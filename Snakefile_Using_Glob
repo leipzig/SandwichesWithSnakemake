@@ -1,0 +1,16 @@
+import glob
+import re
+
+KIDS = glob.glob('kids/*')
+SANDWICHES = [os.path.basename(kid)+'.pbandj' for kid in KIDS]
+
+rule all:
+     input: SANDWICHES
+
+rule clean:
+     shell: "rm -f *.pbandj"
+
+rule peanut_butter_and_jelly_sandwich_recipe:
+     input: "kids/{name}", jelly="ingredients/jelly", pb="ingredients/peanut_butter"
+     output: "{name}.pbandj"
+     shell: "cat {input.pb} {input.jelly} > {output}"
