@@ -91,6 +91,16 @@ In Snakemake, just as in Make:
 
 In Snakemake (but not Make) you have to write a pseudo-rule that uses the variable as input.
 
-How can we derive targets from existing source files?
+### How can we derive targets from existing source files?
 
-Snakemake is Python, so we can simply use Python's `glob` function to read a directory contents and then transform the names to targets
+Snakemake is Python, so we can simply use Python's `glob` function to read a directory contents and then transform the names into targets
+```
+KIDS = glob.glob('kids/*')
+SANDWICHES = [os.path.basename(kid)+'.pbandj' for kid in KIDS]
+```
+
+### How can we access the targets or sources from a list?
+```
+KIDS = [line.strip() for line in open("KidList.txt").readlines()]
+SANDWICHES = [kid+'.pbandj' for kid in KIDS]
+```
