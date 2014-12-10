@@ -133,7 +133,7 @@ You can try this with:
 ```
 
 #### Use a sentinel
-The sentinel strategy, popular in Make, creates an output file as a sentinel, fake target from our list file and use a function that return a list of sandwiches as input.
+The sentinel strategy, popular in Make, creates an output file as a sentinel, fake target from our list file and uses a function that returns a list of sandwiches as input.
 
 This is easier if we maintain consistent naming conventions, i.e. we suffix lists as .List.txt. Our sentinel will be `A.Kid.List` to process a file called `A.Kid.List.txt`.
 ```
