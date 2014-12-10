@@ -1,4 +1,4 @@
-#snakemake -s Snakefile_Listfile_Argument kidlist
+#Usage: snakemake -s Snakefile_Listfile_Argument KidList
 import os
 
 def get_sandwiches(wildcards):

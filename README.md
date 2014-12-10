@@ -106,4 +106,33 @@ SANDWICHES = [kid+'.pbandj' for kid in KIDS]
 ```
 
 ### How do I tell Snakemake which list of kids to process as a command line argument?
-You can override config file settings on the commandline, but the best way to do this particular is to treat the processed file as a target
+You can override config file settings on the commandline, but the best way to do this particular is to treat the processed file as a target and use a function that return a list of sandwiches as input.
+
+
+```
+#Usage: snakemake -s Snakefile_Listfile_Argument KidList
+import os
+
+def get_sandwiches(wildcards):
+    #this is evalutated with every conceivable wildcard from every rule
+    #so be careful to open only the correct type of file (listfile)
+    for wildcard in wildcards:
+        if(os.path.exists(wildcard+".txt")):
+            kids = [line.strip() for line in open(wildcard+".txt").readlines()]
+            sandwiches = [kid+'.pbandj' for kid in kids]
+            return(sandwiches)
+    return("")
+
+rule listfile:
+     input: get_sandwiches
+     output: "{listfile}"
+     shell: "touch {output}"
+
+rule peanut_butter_and_jelly_sandwich_recipe:
+     input: "kids/{name}", jelly="ingredients/jelly", pb="ingredients/peanut_butter"
+     output: "{name}.pbandj"
+     shell: "cat {input.pb} {input.jelly} > {output}"
+
+rule clean:
+     shell: "rm -f *.pbandj kidlist"
+```
