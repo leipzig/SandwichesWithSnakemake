@@ -2,6 +2,8 @@
 import os
 
 def get_sandwiches(wildcards):
+    #this is evalutated with every conceivable wildcard from every rule
+    #so be careful to open only the correct type of file (listfile)
     for wildcard in wildcards:
         if(os.path.exists(wildcard+".txt")):
             kids = [line.strip() for line in open(wildcard+".txt").readlines()]
