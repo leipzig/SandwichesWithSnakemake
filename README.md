@@ -1,7 +1,7 @@
 This is my snakefile:
 ```
-(raboso-env)[leipzigj@raboso snakemaketutorial]cat Snakefile 
-SANDWICHES = ['jack.pbandj','jill.pbandj']
+(raboso-env)[leipzigj@raboso snakemaketutorial]cat Snakefile_Basic
+SANDWICHES = ['Jack.pbandj','Jill.pbandj']
 
 rule all:
      input: SANDWICHES
@@ -16,9 +16,10 @@ rule peanut_butter_and_jelly_sandwich_recipe:
 ```
 
 `all` is a pseudo-rule - it only exists to establish the variable `SANDWICHES` as a target.
+Since it is the first rule it will be run by default.
 
 ```
-(raboso-env)[leipzigj@raboso snakemaketutorial]$snakemake all
+(raboso-env)[leipzigj@raboso snakemaketutorial]$snakemake -s Snakefile_Basic
 Provided cores: 1
 Job counts:
     count	jobs
@@ -26,32 +27,32 @@ Job counts:
     1		all
     3
 rule peanut_butter_and_jelly_sandwich_recipe:
-     input: kids/jill, ingredients/peanut_butter, ingredients/jelly
-     output: jill.pbandj
+     input: kids/Jill, ingredients/peanut_butter, ingredients/jelly
+     output: Jill.pbandj
 1 of 3 steps (33%) done
 rule peanut_butter_and_jelly_sandwich_recipe:
-     input: kids/jack, ingredients/peanut_butter, ingredients/jelly
-     output: jack.pbandj
+     input: kids/Jack, ingredients/peanut_butter, ingredients/jelly
+     output: Jack.pbandj
 2 of 3 steps (67%) done
 rule all:
-     input: jack.pbandj, jill.pbandj
+     input: Jack.pbandj, Jill.pbandj
 3 of 3 steps (100%) done
 ```
 We could have typed the targets directly:
 ```
-(raboso-env)[leipzigj@raboso snakemaketutorial]$ snakemake jack.pbandj jill.pbandj
+(raboso-env)[leipzigj@raboso snakemaketutorial]$ snakemake Jack.pbandj Jill.pbandj
 Provided cores: 1
 Job counts:
     count	jobs
     2		peanut_butter_and_jelly_sandwich_recipe
     2
 rule peanut_butter_and_jelly_sandwich_recipe:
-     input: kids/jill, ingredients/jelly, ingredients/peanut_butter
-     output: jill.pbandj
+     input: kids/Jill, ingredients/jelly, ingredients/peanut_butter
+     output: Jill.pbandj
 1 of 2 steps (50%) done
 rule peanut_butter_and_jelly_sandwich_recipe:
-     input: kids/jack, ingredients/jelly, ingredients/peanut_butter
-     output: jack.pbandj
+     input: kids/Jack, ingredients/jelly, ingredients/peanut_butter
+     output: Jack.pbandj
 2 of 2 steps (100%) done
 ```
 But you cannot type variables as targets in Snakemake.
@@ -106,7 +107,10 @@ SANDWICHES = [kid+'.pbandj' for kid in KIDS]
 ```
 
 ### How do I tell Snakemake which list of kids to process as a command line argument?
-You can override config file settings on the commandline, but the best way to do tell Snakemake to really something is to treat the processed file as a sentinel target and use a function that return a list of sandwiches as input.
+There are (at least) two ways we can accomplish this:
+
+#### Use a sentinel
+The sentinel strategy creates an output file as a sentinel, fake target from our list file and use a function that return a list of sandwiches as input.
 
 This is easier if we maintain consistent naming conventions, i.e. we suffix lists as .List.txt. Our sentinel will be `Kid.List` to process a file called `Kid.List.txt`.
 
@@ -138,3 +142,5 @@ rule peanut_butter_and_jelly_sandwich_recipe:
 rule clean:
      shell: "rm -f *.pbandj *List"
 ```
+
+#### Use a configuration parameter
