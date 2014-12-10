@@ -114,6 +114,7 @@ You can try this with:
 ### How do I tell Snakemake which list of kids to process as a command line argument?
 There are (at least) two ways we can accomplish this:
 #### Use a configuration parameter
+Snakemake autosets a global variable config, even if no configfile is loaded. This can be used to pass arguments to the snakefile.
 ```
 #Usage: snakemake -s config.snake --config list=B
 KIDS = [line.strip() for line in open(config.get("list")+".Kid.List.txt").readlines()]
@@ -171,6 +172,6 @@ rule clean:
 ```
 You can try this with:
 ```
-(snake-env)$ snakemake -s listfile.snake A.Kid.List
+(snake-env)$ snakemake -s listarg.snake A.Kid.List
 ```
 
