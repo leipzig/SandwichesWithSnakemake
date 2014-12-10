@@ -97,6 +97,8 @@ Snakemake is Python, so we can simply use Python's `glob` function to read a dir
 ```
 KIDS = glob.glob('kids/*')
 SANDWICHES = [os.path.basename(kid)+'.pbandj' for kid in KIDS]
+
+...
 ```
 You can try this with:
 ```
@@ -106,6 +108,8 @@ You can try this with:
 ```
 KIDS = [line.strip() for line in open("A.Kid.List.txt").readlines()]
 SANDWICHES = [kid+'.pbandj' for kid in KIDS]
+
+...
 ```
 You can try this with:
 ```
@@ -114,23 +118,13 @@ You can try this with:
 ### How do I tell Snakemake which list of kids to process as a command line argument?
 There are (at least) two ways we can accomplish this:
 #### Use a configuration parameter
-Snakemake autosets a global variable config, even if no configfile is loaded. This can be used to pass arguments to the snakefile.
+Snakemake autosets a global variable `config`, even if no configfile is loaded. This can be used to pass arguments to the snakefile.
 ```
 #Usage: snakemake -s config.snake --config list=B
 KIDS = [line.strip() for line in open(config.get("list")+".Kid.List.txt").readlines()]
 SANDWICHES = [kid+'.pbandj' for kid in KIDS]
 
-rule all:
-     input: SANDWICHES
-
-rule clean:
-     shell: "rm -f *.pbandj"
-
-rule peanut_butter_and_jelly_sandwich_recipe:
-     input: "kids/{name}", jelly="ingredients/jelly", pb="ingredients/peanut_butter"
-     output: "{name}.pbandj"
-     shell: "cat {input.pb} {input.jelly} > {output}"
-
+...
 ```
 
 You can try this with:
@@ -141,7 +135,7 @@ You can try this with:
 #### Use a sentinel
 The sentinel strategy, popular in Make, creates an output file as a sentinel, fake target from our list file and use a function that return a list of sandwiches as input.
 
-This is easier if we maintain consistent naming conventions, i.e. we suffix lists as .List.txt. Our sentinel will be `Kid.List` to process a file called `Kid.List.txt`.
+This is easier if we maintain consistent naming conventions, i.e. we suffix lists as .List.txt. Our sentinel will be `A.Kid.List` to process a file called `A.Kid.List.txt`.
 ```
 #Usage: snakemake -s listarg.snake A.Kid.List
 import os
@@ -162,13 +156,7 @@ rule listfile:
      output: "{listfile}"
      shell: "touch {output}"
 
-rule peanut_butter_and_jelly_sandwich_recipe:
-     input: "kids/{name}", jelly="ingredients/jelly", pb="ingredients/peanut_butter"
-     output: "{name}.pbandj"
-     shell: "cat {input.pb} {input.jelly} > {output}"
-
-rule clean:
-     shell: "rm -f *.pbandj *List"
+...
 ```
 You can try this with:
 ```
