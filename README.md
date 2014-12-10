@@ -1,6 +1,6 @@
 This is my snakefile:
 ```
-(raboso-env)[leipzigj@raboso snakemaketutorial]cat Snakefile_Basic
+(snake-env)$ cat basic.snake
 SANDWICHES = ['Jack.pbandj','Jill.pbandj']
 
 rule all:
@@ -19,7 +19,7 @@ rule peanut_butter_and_jelly_sandwich_recipe:
 Since it is the first rule it will be run by default.
 
 ```
-(raboso-env)[leipzigj@raboso snakemaketutorial]$snakemake -s Snakefile_Basic
+(snake-env)$ snakemake -s basic.snake
 Provided cores: 1
 Job counts:
     count	jobs
@@ -40,7 +40,7 @@ rule all:
 ```
 We could have typed the targets directly:
 ```
-(raboso-env)[leipzigj@raboso snakemaketutorial]$ snakemake Jack.pbandj Jill.pbandj
+(snake-env)$ snakemake -s basic.snake Jack.pbandj Jill.pbandj
 Provided cores: 1
 Job counts:
     count	jobs
@@ -57,16 +57,15 @@ rule peanut_butter_and_jelly_sandwich_recipe:
 ```
 But you cannot type variables as targets in Snakemake.
 ```
-(raboso-env)[leipzigj@raboso snakemaketutorial]$ snakemake SANDWICHES
+(snake-env)$ snakemake -s basic.snake snakemake -s SANDWICHES
 MissingRuleException:
 No rule to produce SANDWICHES.
-  File "/nas/is1/bin/raboso-env/lib/python3.3/functools.py", line 275, in wrapper
 ```
 You can only type in files and rules as targets.
 
 `peanut_butter_and_jelly_sandwich_recipe` is an implicit rule - it uses wildcards to define its inputs and outputs. Can we run it?
 ```
-(raboso-env)[leipzigj@raboso snakemaketutorial]$ snakemake peanut_butter_and_jelly_sandwich_recipe
+(snake-env)$ snakemake -s basic.snake peanut_butter_and_jelly_sandwich_recipe
 RuleException in line 6 of Snakefile:
 Could not resolve wildcards in rule peanut_butter_and_jelly_sandwich_recipe:
 name
@@ -99,23 +98,51 @@ Snakemake is Python, so we can simply use Python's `glob` function to read a dir
 KIDS = glob.glob('kids/*')
 SANDWICHES = [os.path.basename(kid)+'.pbandj' for kid in KIDS]
 ```
-
+You can try this with:
+```
+(snake-env)$ snakemake -s glob.snake
+```
 ### How can we access the targets or sources from a list?
 ```
 KIDS = [line.strip() for line in open("KidList.txt").readlines()]
 SANDWICHES = [kid+'.pbandj' for kid in KIDS]
 ```
-
+You can try this with:
+```
+(snake-env)$ snakemake -s listfile.snake
+```
 ### How do I tell Snakemake which list of kids to process as a command line argument?
 There are (at least) two ways we can accomplish this:
+#### Use a configuration parameter
+```
+#Usage: snakemake -s config.snake --config list=B
+KIDS = [line.strip() for line in open(config.get("list")+".Kid.List.txt").readlines()]
+SANDWICHES = [kid+'.pbandj' for kid in KIDS]
 
-#### Use a sentinel
-The sentinel strategy creates an output file as a sentinel, fake target from our list file and use a function that return a list of sandwiches as input.
+rule all:
+     input: SANDWICHES
 
-This is easier if we maintain consistent naming conventions, i.e. we suffix lists as .List.txt. Our sentinel will be `Kid.List` to process a file called `Kid.List.txt`.
+rule clean:
+     shell: "rm -f *.pbandj"
+
+rule peanut_butter_and_jelly_sandwich_recipe:
+     input: "kids/{name}", jelly="ingredients/jelly", pb="ingredients/peanut_butter"
+     output: "{name}.pbandj"
+     shell: "cat {input.pb} {input.jelly} > {output}"
 
 ```
-#Usage: snakemake -s Snakefile_Listfile_Argument KidList
+
+You can try this with:
+```
+(snake-env)$ snakemake -s config.snake --config list=A
+```
+
+#### Use a sentinel
+The sentinel strategy, popular in Make, creates an output file as a sentinel, fake target from our list file and use a function that return a list of sandwiches as input.
+
+This is easier if we maintain consistent naming conventions, i.e. we suffix lists as .List.txt. Our sentinel will be `Kid.List` to process a file called `Kid.List.txt`.
+```
+#Usage: snakemake -s listarg.snake A.Kid.List
 import os
 import fnmatch
 
@@ -142,5 +169,8 @@ rule peanut_butter_and_jelly_sandwich_recipe:
 rule clean:
      shell: "rm -f *.pbandj *List"
 ```
+You can try this with:
+```
+(snake-env)$ snakemake -s listfile.snake A.Kid.List
+```
 
-#### Use a configuration parameter
