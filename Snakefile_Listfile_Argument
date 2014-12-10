@@ -1,19 +1,23 @@
-def get_sandwiches(listfile):
-    kids = [line.strip() for line in open("KidList.txt").readlines()]
-    sandwiches = [kid+'.pbandj' for kid in kids]
-    return(sandwiches)
+#snakemake -s Snakefile_Listfile_Argument kidlist
+import os
+
+def get_sandwiches(wildcards):
+    for wildcard in wildcards:
+        if(os.path.exists(wildcard+".txt")):
+            kids = [line.strip() for line in open(wildcard+".txt").readlines()]
+            sandwiches = [kid+'.pbandj' for kid in kids]
+            return(sandwiches)
+    return("")
 
 rule listfile:
-     input: get_sandwiches("{listfile}")
+     input: get_sandwiches
      output: "{listfile}"
-     shell: """
-            touch {output}
-            """
-
-rule clean:
-     shell: "rm -f *.pbandj kidlist"
+     shell: "touch {output}"
 
 rule peanut_butter_and_jelly_sandwich_recipe:
      input: "kids/{name}", jelly="ingredients/jelly", pb="ingredients/peanut_butter"
      output: "{name}.pbandj"
      shell: "cat {input.pb} {input.jelly} > {output}"
+
+rule clean:
+     shell: "rm -f *.pbandj kidlist"
