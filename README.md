@@ -104,3 +104,6 @@ SANDWICHES = [os.path.basename(kid)+'.pbandj' for kid in KIDS]
 KIDS = [line.strip() for line in open("KidList.txt").readlines()]
 SANDWICHES = [kid+'.pbandj' for kid in KIDS]
 ```
+
+### How do I tell Snakemake which list of kids to process as a command line argument?
+You can override config file settings on the commandline, but the best way to do this particular is to treat the processed file as a target
