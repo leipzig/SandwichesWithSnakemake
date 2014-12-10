@@ -104,7 +104,7 @@ You can try this with:
 ```
 ### How can we access the targets or sources from a list?
 ```
-KIDS = [line.strip() for line in open("KidList.txt").readlines()]
+KIDS = [line.strip() for line in open("A.Kid.List.txt").readlines()]
 SANDWICHES = [kid+'.pbandj' for kid in KIDS]
 ```
 You can try this with:
