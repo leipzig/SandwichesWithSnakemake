@@ -108,7 +108,7 @@ SANDWICHES = [kid+'.pbandj' for kid in KIDS]
 ### How do I tell Snakemake which list of kids to process as a command line argument?
 You can override config file settings on the commandline, but the best way to do tell Snakemake to really something is to treat the processed file as a sentinel target and use a function that return a list of sandwiches as input.
 
-This is easier if we maintain consistent naming conventions, i.e. we suffix lists as .List.txt. Our sentinel will be `Kid.List`.
+This is easier if we maintain consistent naming conventions, i.e. we suffix lists as .List.txt. Our sentinel will be `Kid.List` to process a file called `Kid.List.txt`.
 
 ```
 #Usage: snakemake -s Snakefile_Listfile_Argument Kid.List
