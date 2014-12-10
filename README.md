@@ -111,14 +111,15 @@ You can override config file settings on the commandline, but the best way to do
 This is easier if we maintain consistent naming conventions, i.e. we suffix lists as .List.txt. Our sentinel will be `Kid.List` to process a file called `Kid.List.txt`.
 
 ```
-#Usage: snakemake -s Snakefile_Listfile_Argument Kid.List
+#Usage: snakemake -s Snakefile_Listfile_Argument KidList
 import os
+import fnmatch
 
 def get_sandwiches(wildcards):
-    #this is evalutated with every conceivable wildcard from every rule
-    #so be careful to open only the correct type of file (listfile)
+    #these get evaluated with wildcards from every rule
+    #so be careful to open only the list file
     for wildcard in wildcards:
-        if(os.path.exists(wildcard+".txt")):
+        if os.path.exists(wildcard+'.txt') and fnmatch.fnmatch(wildcard+'.txt', '*.List.txt'):
             kids = [line.strip() for line in open(wildcard+".txt").readlines()]
             sandwiches = [kid+'.pbandj' for kid in kids]
             return(sandwiches)
@@ -135,5 +136,5 @@ rule peanut_butter_and_jelly_sandwich_recipe:
      shell: "cat {input.pb} {input.jelly} > {output}"
 
 rule clean:
-     shell: "rm -f *.pbandj *.List.txt"
+     shell: "rm -f *.pbandj *List"
 ```

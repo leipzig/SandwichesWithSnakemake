@@ -3,8 +3,8 @@ import os
 import fnmatch
 
 def get_sandwiches(wildcards):
-    #this is evalutated with every conceivable wildcard from every rule
-    #so be careful to open only the correct type of file (listfile)
+    #these get evaluated with wildcards from every rule
+    #so be careful to open only the list file
     for wildcard in wildcards:
         if os.path.exists(wildcard+'.txt') and fnmatch.fnmatch(wildcard+'.txt', '*.List.txt'):
             kids = [line.strip() for line in open(wildcard+".txt").readlines()]
