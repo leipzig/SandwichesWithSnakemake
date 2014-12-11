@@ -1,3 +1,19 @@
+### Introduction
+This a beginner's tutorial to Snakemake.
+
+#### Installation
+https://bitbucket.org/johanneskoester/snakemake/wiki/Documentation#markdown-header-installation
+If you plan on using R within Snakemake take a look at [this](SETUP.md)
+
+#### Concept
+This Snakemake tutorial build on a theme of making sandwiches for children. Variations are provided that attempt to address common workflow approaches.
+
+Like Make, the actors in Snakemake are usually files. In this example:
+* The children are files
+* The ingredients are files
+* The sandwiches are files
+
+### Explicit targets (see basic.snake)
 This is my snakefile:
 ```
 (snake-env)$ cat basic.snake
@@ -72,7 +88,9 @@ name
 ```
 Why didn't this work? Because Snakemake has no idea what you are trying to make.
 
-A wildcard rule is a recipe, not a target. You might say, "hey why didn't it just look in the `kids` folder and then make a sandwich for each of them?" However, the `kids` directory was named just for neatness. Our rule could just as easily been:
+A wildcard rule is a recipe, not a target. You might say, "hey why didn't it just look in the `kids` folder and then make a sandwich for each of them?" (This is actually done in the `glob.snake` example below.)
+
+The `kids` directory in this example was named just for neatness. Our rule could just as easily been:
 ```
 rule peanut_butter_and_jelly_sandwich_recipe:
      input: "{name}", jelly="ingredients/jelly", pb="ingredients/peanut_butter"
@@ -91,7 +109,7 @@ In Snakemake, just as in Make:
 
 In Snakemake (but not Make) you have to write a pseudo-rule that uses the variable as input.
 
-### How can we derive targets from existing source files?
+### How can we derive targets from existing source files?  (see glob.snake)
 
 Snakemake is Python, so we can simply use Python's `glob` function to read a directory contents and then transform the names into targets
 ```
@@ -133,9 +151,9 @@ You can try this with:
 ```
 
 #### Use a sentinel
-The sentinel strategy, popular in Make, creates an output file as a sentinel, fake target from our list file and uses a function that returns a list of sandwiches as input.
+The sentinel strategy, popular in Make, creates an output file as a fake target or "sentinel" from our list file and for input we employ a vanilla Python function `get_sandwiches` that returns a list of sandwiches.
 
-This is easier if we maintain consistent naming conventions, i.e. we suffix lists as .List.txt. Our sentinel will be `A.Kid.List` to process a file called `A.Kid.List.txt`.
+The wildcards argument sent to `get_sandwiches` is evaluated with all possible wildcards from all rules before the workflow is started, so it should be written in a manner that minimizes ambiguity. Writing `get_sandwiches` is easier if we maintain consistent naming conventions, i.e. we suffix kid lists with .List.txt. Our sentinel, and the target we ask Snakemake to produce, will be `A.Kid.List` in order to process a file called `A.Kid.List.txt`.
 ```
 #Usage: snakemake -s listarg.snake A.Kid.List
 import os
