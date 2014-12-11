@@ -95,7 +95,7 @@ name
 ```
 Why didn't this work? Because Snakemake has no idea what you are trying to make.
 
-A wildcard rule is a recipe, not a target. You might say, "hey why didn't it just look in the `kids` folder and then make a sandwich for each of them?" (This is actually done in the `glob.snake` example below.)
+A wildcard rule is a recipe, not a target. You might say, "hey why didn't it just look in the `kids` folder and then make a sandwich for each of them?" (This approach is implemented in the `glob.snake` example below.)
 
 The `kids` directory in this example was named just for neatness. Our rule could just as easily been:
 ```
@@ -129,7 +129,7 @@ You can try this with:
 ```
 (snake-env)$ snakemake -s glob.snake
 ```
-### How can we access the targets or sources from a list?
+### How can we access the targets or sources from a list? (see <listfile.snake>)
 ```
 KIDS = [line.strip() for line in open("A.Kid.List.txt").readlines()]
 SANDWICHES = [kid+'.pbandj' for kid in KIDS]
@@ -142,7 +142,7 @@ You can try this with:
 ```
 ### How do I tell Snakemake which list of kids to process as a command line argument?
 There are (at least) two ways we can accomplish this:
-#### Use a configuration parameter
+#### Use a configuration parameter (see <config.snake>)
 Snakemake autosets a global variable `config`, even if no configfile is loaded. This can be used to pass arguments to the snakefile.
 ```
 #Usage: snakemake -s config.snake --config list=B
@@ -157,7 +157,7 @@ You can try this with:
 (snake-env)$ snakemake -s config.snake --config list=A
 ```
 
-#### Use a sentinel
+#### Use a sentinel (see <listarg.snake>)
 The sentinel strategy, popular in Make, creates an output file as a fake target or "sentinel" from our list file and for input we employ a vanilla Python function `get_sandwiches` that returns a list of sandwiches.
 
 The wildcards argument sent to `get_sandwiches` is evaluated with all possible wildcards from all rules before the workflow is started, so it should be written in a manner that minimizes ambiguity. Writing `get_sandwiches` is easier if we maintain consistent naming conventions, i.e. we suffix kid lists with .List.txt. Our sentinel, and the target we ask Snakemake to produce, will be `A.Kid.List` in order to process a file called `A.Kid.List.txt`.
