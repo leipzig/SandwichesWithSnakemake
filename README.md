@@ -20,7 +20,7 @@ Like Make, the actors in Snakemake are usually files. In this example:
 * The ingredients are files
 * The sandwiches are files
 
-### Explicit targets (see basic.snake)
+### Explicit targets (see [basic.snake](basic.snake))
 This is my snakefile:
 ```
 (snake-env)$ cat basic.snake
@@ -116,7 +116,7 @@ In Snakemake, just as in Make:
 
 In Snakemake (but not Make) you have to write a pseudo-rule that uses the variable as input.
 
-### How can we derive targets from existing source files?  (see glob.snake)
+### How can we derive targets from existing source files?  (see [glob.snake](glob.snake))
 
 Snakemake is Python, so we can simply use Python's `glob` function to read a directory contents and then transform the names into targets
 ```
@@ -129,7 +129,7 @@ You can try this with:
 ```
 (snake-env)$ snakemake -s glob.snake
 ```
-### How can we access the targets or sources from a list? (see <listfile.snake>)
+### How can we access the targets or sources from a list? (see [listfile.snake](listfile.snake))
 ```
 KIDS = [line.strip() for line in open("A.Kid.List.txt").readlines()]
 SANDWICHES = [kid+'.pbandj' for kid in KIDS]
@@ -142,7 +142,7 @@ You can try this with:
 ```
 ### How do I tell Snakemake which list of kids to process as a command line argument?
 There are (at least) two ways we can accomplish this:
-#### Use a configuration parameter (see <config.snake>)
+#### Use a configuration parameter (see [config.snake](config.snake))
 Snakemake autosets a global variable `config`, even if no configfile is loaded. This can be used to pass arguments to the snakefile.
 ```
 #Usage: snakemake -s config.snake --config list=B
@@ -157,12 +157,12 @@ You can try this with:
 (snake-env)$ snakemake -s config.snake --config list=A
 ```
 
-#### Use a sentinel (see <listarg.snake>)
+#### Use a sentinel (see [sentinel.snake](sentinel.snake))
 The sentinel strategy, popular in Make, creates an output file as a fake target or "sentinel" from our list file and for input we employ a vanilla Python function `get_sandwiches` that returns a list of sandwiches.
 
 The wildcards argument sent to `get_sandwiches` is evaluated with all possible wildcards from all rules before the workflow is started, so it should be written in a manner that minimizes ambiguity. Writing `get_sandwiches` is easier if we maintain consistent naming conventions, i.e. we suffix kid lists with .List.txt. Our sentinel, and the target we ask Snakemake to produce, will be `A.Kid.List` in order to process a file called `A.Kid.List.txt`.
 ```
-#Usage: snakemake -s listarg.snake A.Kid.List
+#Usage: snakemake -s sentinel.snake A.Kid.List
 import os
 import fnmatch
 
@@ -185,6 +185,6 @@ rule listfile:
 ```
 You can try this with:
 ```
-(snake-env)$ snakemake -s listarg.snake A.Kid.List
+(snake-env)$ snakemake -s sentinel.snake A.Kid.List
 ```
 
