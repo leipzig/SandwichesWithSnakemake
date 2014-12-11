@@ -2,11 +2,18 @@
 This a beginner's tutorial to Snakemake.
 
 #### Installation
+Follow the installation instructions here:
 https://bitbucket.org/johanneskoester/snakemake/wiki/Documentation#markdown-header-installation
-If you plan on using R within Snakemake take a look at [this](SETUP.md)
 
-#### Concept
-This Snakemake tutorial build on a theme of making sandwiches for children. Variations are provided that attempt to address common workflow approaches.
+If you plan on using R within Snakemake take a look at [this](SETUP.md).
+
+Clone this lesson:
+```
+git clone https://github.com/leipzig/SnakemakeMiniLesson.git
+````
+
+#### Tutorial Concept
+Rather than get bogged down in bioinformatics workflows, this Snakemake tutorial builds on a theme of making sandwiches for children. Variations are provided that attempt to address common workflow approaches.
 
 Like Make, the actors in Snakemake are usually files. In this example:
 * The children are files
