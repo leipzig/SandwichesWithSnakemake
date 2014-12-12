@@ -1,6 +1,13 @@
 ### Introduction
+#### Concept and Rationale
 This a beginner's tutorial to Snakemake.
 
+Rather than get bogged down in bioinformatics workflows, this Snakemake tutorial builds on a theme of making sandwiches for children. Variations are provided that attempt to address common workflow approaches.
+
+Like Make, the actors in Snakemake are usually files. In this example:
+* The children are files
+* The ingredients are files
+* The sandwiches are files
 #### Installation
 Follow the installation instructions here:
 https://bitbucket.org/johanneskoester/snakemake/wiki/Documentation#markdown-header-installation
@@ -11,15 +18,7 @@ Clone this lesson:
 ```
 git clone https://github.com/leipzig/SnakemakeMiniLesson.git
 ````
-
-#### Tutorial Concept
-Rather than get bogged down in bioinformatics workflows, this Snakemake tutorial builds on a theme of making sandwiches for children. Variations are provided that attempt to address common workflow approaches.
-
-Like Make, the actors in Snakemake are usually files. In this example:
-* The children are files
-* The ingredients are files
-* The sandwiches are files
-
+### Tutorial
 ### Explicit targets (see [basic.snake](basic.snake))
 This is my snakefile:
 ```
