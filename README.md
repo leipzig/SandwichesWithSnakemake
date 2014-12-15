@@ -4,7 +4,7 @@ This a beginner's tutorial to Snakemake.
 
 Rather than get bogged down in bioinformatics workflows, this Snakemake tutorial builds on a theme of making sandwiches for children. Variations are provided that attempt to address common workflow approaches.
 
-Like Make, the actors in Snakemake are usually files. In this example:
+Like Make, the actors in Snakemake are *usually* files. In this example:
 * The children are files
 * The ingredients are files
 * The sandwiches are files
