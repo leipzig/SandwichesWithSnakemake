@@ -1,6 +1,6 @@
 ### Introduction
 #### Concept and Rationale
-This a beginner's tutorial to Snakemake.
+This is a beginner's tutorial to Snakemake.
 
 Rather than get bogged down in bioinformatics workflows, this Snakemake tutorial builds on a theme of making sandwiches for children. Variations are provided that attempt to address common workflow approaches.
 
