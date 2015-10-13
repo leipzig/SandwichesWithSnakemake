@@ -99,14 +99,7 @@ Why didn't this work? Because Snakemake has no idea what you are trying to make.
 
 A wildcard rule is a recipe, not a target. You might say, "hey why didn't it just look in the `kids` folder and then make a sandwich for each of them?" (This approach is implemented in the `glob.snake` example below.)
 
-Trying to call an implicit rule is the most beginner's error in Snakemake, so to review:
 
-Calling snakemake with the following targets:
-* any old file *OK*
-* a variable *NOT OK*
-* a rule that has named files as input *OK*
-* a rule that has as input variables that are lists of named files *OK*
-* a rule that has wildcard placeholders in the output *NOT OK*
 
 The `kids` directory in this example was named just for neatness. Our rule could just as easily been:
 ```
@@ -115,7 +108,6 @@ rule peanut_butter_and_jelly_sandwich_recipe:
      output: "{name}.pbandj"
      shell: "cat {input.pb} {input.jelly} > {output}"
 ```
-
 
 So now any existing file in the filesystem is eligible for a sandwich! Exactly whose sandwich is it supposed to make if I run `peanut_butter_and_jelly_sandwich_recipe`?
 
@@ -126,6 +118,16 @@ In Snakemake, just as in Make:
 *  Write a pseudo-rule that uses the variable as input.
 
 In Snakemake (but not Make) you have to write a pseudo-rule that uses the variable as input.
+
+#### You will screw this up, so please review!
+Trying to call an implicit rule is the most beginner's error in Snakemake, so to review:
+
+Calling snakemake with the following targets:
+* any old file *OK*
+* a variable *NOT OK*
+* a rule that has named files as input *OK*
+* a rule that has as input variables that are lists of named files *OK*
+* a rule that has wildcard placeholders in the output *NOT OK*
 
 ### How can we derive targets from existing source files?  (see [glob.snake](glob.snake))
 
