@@ -104,7 +104,7 @@ Trying to call an implicit rule is the most beginner's error in Snakemake, so to
 Calling snakemake with the following targets:
 * any old file *OK*
 * a rule that has named files as input *OK*
-* a rule that variables that are lists of named files *OK*
+* a rule that has as input variables that are lists of named files *OK*
 * a rule that has wildcard placeholders in the output *NOT OK*
 
 The `kids` directory in this example was named just for neatness. Our rule could just as easily been:
