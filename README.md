@@ -84,7 +84,9 @@ But you cannot type variables as targets in Snakemake.
 MissingRuleException:
 No rule to produce SANDWICHES.
 ```
-You can only type in files and rules as targets.
+You can only type in files and explicit (i.e. non-wildcard) rules as targets.
+
+Why only explicit rules?
 
 `peanut_butter_and_jelly_sandwich_recipe` is an implicit rule - it uses wildcards to define its inputs and outputs. Can we run it?
 ```
