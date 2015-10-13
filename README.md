@@ -84,7 +84,7 @@ But you cannot type variables as targets in Snakemake.
 MissingRuleException:
 No rule to produce SANDWICHES.
 ```
-You can only type in files and explicit (i.e. non-wildcard) rules as targets.
+**You can only type in files and explicit (i.e. non-wildcard) rules as targets.**
 
 Why only explicit rules?
 
@@ -98,6 +98,14 @@ name
 Why didn't this work? Because Snakemake has no idea what you are trying to make.
 
 A wildcard rule is a recipe, not a target. You might say, "hey why didn't it just look in the `kids` folder and then make a sandwich for each of them?" (This approach is implemented in the `glob.snake` example below.)
+
+Trying to call an implicit rule is the most beginner's error in Snakemake, so to review:
+
+Calling snakemake with the following targets:
+* any old file *OK*
+* a rule that has named files as input *OK*
+* a rule that variables that are lists of named files *OK*
+* a rule that has wildcard placeholders in the output *NOT OK*
 
 The `kids` directory in this example was named just for neatness. Our rule could just as easily been:
 ```
