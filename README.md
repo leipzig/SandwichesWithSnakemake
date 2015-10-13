@@ -120,7 +120,7 @@ In Snakemake, just as in Make:
 In Snakemake (but not Make) you have to write a pseudo-rule that uses the variable as input.
 
 #### You will screw this up, so please review!
-Trying to call an implicit rule is the most beginner's error in Snakemake, so to review:
+Trying to call an implicit rule is the most beginner's error in Snakemake, but the error it returns is not so helpful.
 
 Calling snakemake with the following targets:
 * any old file *OK*
