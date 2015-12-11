@@ -17,7 +17,7 @@ If you plan on using R within Snakemake take a look at [this](SETUP.md).
 
 Clone this lesson:
 ```
-git clone https://github.com/leipzig/SnakemakeMiniLesson.git
+git clone https://github.com/leipzig/SandwichesWithSnakemake
 ````
 ### Tutorial
 #### Explicit targets (see [basic.snake](basic.snake))
