@@ -10,8 +10,8 @@ Like Make, the actors in Snakemake are *usually* files. In this example:
 * The sandwiches are files
 
 #### Installation
-Follow the installation instructions here:
-https://bitbucket.org/johanneskoester/snakemake/wiki/Documentation#markdown-header-installation
+Follow the installation instructions here (bioconda is strongly recommended):
+https://bitbucket.org/snakemake/snakemake/wiki/Home
 
 If you plan on using R within Snakemake take a look at [this](SETUP.md).
 
