@@ -1,4 +1,4 @@
-#Usage: snakemake -s listarg.snake A.Kid.List
+#Usage: snakemake -s sentinel.snake B.Kid.List
 import os
 import fnmatch
 
